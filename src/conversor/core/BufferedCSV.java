@@ -13,24 +13,9 @@ public class BufferedCSV {
 
 	
 	private static final String CARACTER_PARA_SPLIT_DATA = "/";
-	private static final String CARACTER_PARA_SPLIT = ";";
 	private static final String EXTENSAO = ".csv";
 	protected static final String URL = "http://www4.bcb.gov.br/Download/fechamento/";
 
-	
-	public void read(String quotation) throws ConverterException{
-	  try {
-		    BufferedReader br = getBufferedReader(quotation);
-	        String line = "";
-		    while ((line = br.readLine()) != null) {
-                String[] country = line.split(CARACTER_PARA_SPLIT);
-                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
-            }
-	  } catch (IOException ex) {
-		  throw new ConverterException(ex);
-	  }
-	}
-	
 	
 	public BufferedReader getBufferedReader(String quotation) throws ConverterException{
 		try {
