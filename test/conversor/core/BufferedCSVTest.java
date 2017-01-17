@@ -2,18 +2,21 @@ package conversor.core;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import conversor.exception.ConverterException;
 import conversor.exception.ParametroInvalidoException;
 
-public class ConverterTest {
+public class BufferedCSVTest {
 	
-	private Converter converter;
+	private BufferedCSV leitor;
 
 	@Before
 	public void setUp() throws Exception {
-		converter = new Converter();
+		leitor = new BufferedCSV();
 	}
 	
 	@Test
@@ -21,7 +24,7 @@ public class ConverterTest {
 		String quotation = "17/01/2016";
 		String url;
 		try {
-			url = converter.construirUrl(quotation);
+			url = leitor.construirUrl(quotation);
 			assertEquals("http://www4.bcb.gov.br/Download/fechamento/20160117.csv",url);
 		} catch (Exception e) {
 			fail("Teste falho: " + e.getMessage());
@@ -33,7 +36,7 @@ public class ConverterTest {
 		String quotation = "17/01/2016/12";
 		String url;
 		try {
-			url = converter.construirUrl(quotation);
+			url = leitor.construirUrl(quotation);
 			assertEquals("http://www4.bcb.gov.br/Download/fechamento/20160117.csv",url);
 		} catch (ParametroInvalidoException e) {
 			assertEquals("Data para conversão invalida!", e.getMessage());
@@ -47,7 +50,7 @@ public class ConverterTest {
 		String quotation = null;
 		String url;
 		try {
-			url = converter.construirUrl(quotation);
+			url = leitor.construirUrl(quotation);
 			assertEquals("http://www4.bcb.gov.br/Download/fechamento/20160117.csv",url);
 		} catch (ParametroInvalidoException e) {
 			assertEquals("Data para conversão invalida!", e.getMessage());
@@ -56,5 +59,24 @@ public class ConverterTest {
 		}
 	}
 	
+	@Test
+	public void deveRetornarBufferedReaderQuandoPossuirArquivoCsvParaDataPassada(){
+		try {
+			BufferedReader bufferedReader = leitor.getBufferedReader("17/01/2017");
+			assertNotNull(bufferedReader);
+		} catch (ConverterException e) {
+			fail("Teste falho: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void deveSubirConverterExceptionQuandoNãoEncontrarArquivoParaDataSolicitada(){
+		try {
+			BufferedReader bufferedReader = leitor.getBufferedReader("15/01/2017");
+			fail("Teste falho");
+		} catch (ConverterException ex) {
+			assertTrue(ex.getMessage().contains("Não possui cotação para o dia solicitado!"));
+		}
+	}
 
 }
