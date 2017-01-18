@@ -64,6 +64,28 @@ public class ConversorTest {
 	}
 	
 	@Test
+	public void deveConverterRandeAfricanoParaDolar(){
+		BigDecimal quotation;
+		try {
+			quotation = converter.currencyQuotation("USD","ZAR", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("1348.63"));
+		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveConverterDolarParaRandeAfricano(){
+		BigDecimal quotation;
+		try {
+			quotation = converter.currencyQuotation("ZAR","USD", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("7.41"));
+		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
 	public void deveConverterDolarParaEuro(){
 		BigDecimal quotation;
 		try {
