@@ -20,6 +20,7 @@ public class Conversor {
 	private BufferedReader dados;
 	
 	private static final String BRL = "BRL";
+	private static final String USD = "USD";
 	private static final String FORMATO_DATA = "dd/MM/yyyy";
 	private static final String CARACTER_PARA_SPLIT = ";";
 	
@@ -35,22 +36,31 @@ public class Conversor {
 			validador.validarParametrosEntrada(from, to, value, quotation);
 			String nomeArquivo = tratarDiasUteis(quotation);
 			String[] cotacaoFrom = buscarCotacao(from, nomeArquivo);
-			Calculadora calculadora = getCalculadora(from, to, cotacaoFrom);
-			resultado =  calculadora.calcular(value.toString(), cotacaoFrom,  buscarCotacao(to, nomeArquivo));
+			String[] cotacaoTo = buscarCotacao(to, nomeArquivo);
+			Calculadora calculadora = getCalculadora(cotacaoFrom, cotacaoTo);
+			resultado =  calculadora.calcular(value.toString(),cotacaoFrom,cotacaoTo);
 		} catch (Exception e) {
 			throw new ConverterException(e.getMessage());
 		}
 		return resultado.setScale(2, RoundingMode.HALF_EVEN);
 	}
-
-	private Calculadora getCalculadora(String from, String to, String[] infoFrom) throws ConverterException {
-		if(ehConversaoParaReal(from, to))
-			return fabrica.fabricar(from, to);
-		return fabrica.fabricar(infoFrom[2]);
+	
+	private Calculadora getCalculadora(String[] cotacaoFrom, String[] cotacaoTo) throws ConverterException {
+		if(ehConversaoParaReal(cotacaoFrom, cotacaoTo))
+			return fabrica.fabricar(cotacaoFrom, cotacaoTo);
+		
+		return fabrica.fabricar(buscarTipoNaCotacao(cotacaoFrom, cotacaoTo));
 	}
 
-	private boolean ehConversaoParaReal(String from, String to){
-		return from.equalsIgnoreCase(BRL) || to.equalsIgnoreCase(BRL);
+	private String buscarTipoNaCotacao(String[] cotacaoFrom, String[] cotacaoTo) {
+		String tipo = cotacaoFrom[2];
+		if(cotacaoTo[3].equals(USD))
+			tipo = cotacaoTo[2];
+		return tipo;
+	}
+
+	private boolean ehConversaoParaReal(String[] infoFrom, String[] cotacaoTo){
+		return infoFrom == null || cotacaoTo == null;
 	}
 	
 	protected String tratarDiasUteis(String quotation) throws ParseException {
@@ -85,11 +95,7 @@ public class Conversor {
 	}
 
 	private void buscarDadosCotacao(String quotation) throws ConverterException, IOException {
-		//if(dados == null){
-			CotacaoDAO dao = new CotacaoDAO();
-			dados =  dao.buscarDadosCotacao(quotation);
-		//}else{
-		//	dados.reset();
-		//}
+		CotacaoDAO dao = new CotacaoDAO();
+		dados =  dao.buscarDadosCotacao(quotation);
 	}
 }

@@ -6,8 +6,8 @@ import java.math.RoundingMode;
 public class CalculadoraRealVenda extends Calculadora {
 
 	@Override
-	public BigDecimal calcular(String value, String[] infoFrom, String[] infoTo ) {
-		return new BigDecimal(value).divide(new BigDecimal(ajustarFormato(infoTo[5])), 2, RoundingMode.HALF_UP);
+	public BigDecimal converter(String value, String[] infoFrom, String[] infoTo ) {
+		return new BigDecimal(value).divide(new BigDecimal(ajustarFormato(infoFrom[5])), 2, RoundingMode.HALF_UP);
 	}
 
 }

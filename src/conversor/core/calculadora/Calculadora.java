@@ -9,5 +9,15 @@ public abstract class Calculadora {
 		return linha.replace(",", ".");
 	}
 	
-	public abstract BigDecimal calcular (String value, String[] infoFrom, String[] infoTo );
+	public BigDecimal calcular (String value, String[] infoFrom, String[] infoTo ){
+		if(fromOuToehRealOuDolar(infoFrom, infoTo))
+			return converter(value, infoTo ,infoFrom );
+		return converter(value, infoFrom, infoTo);
+	}
+	
+	private boolean fromOuToehRealOuDolar(String[] from, String[] to) {
+		return from == null || to == null || from[3].equals("USD") || to[3].equals("USD");
+	}
+	
+	protected abstract BigDecimal converter (String value, String[] infoFrom, String[] infoTo );
 }

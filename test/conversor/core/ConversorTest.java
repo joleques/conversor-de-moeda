@@ -42,11 +42,44 @@ public class ConversorTest {
 	}
 	
 	@Test
-	public void deveConverterRandeParaLibraEgipicia(){
+	public void deveConverterLibraEgipiciaParaRandeAfricano(){
 		BigDecimal quotation;
 		try {
-			quotation = converter.currencyQuotation("ZAR", "EGP", 100, "17/01/2017");
-			assertEquals(quotation, new BigDecimal("142.86"));
+			quotation = converter.currencyQuotation("EGP","ZAR", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("71.61"));
+		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveConverterRandeAfricanoParaLibraEgipicia(){
+		BigDecimal quotation;
+		try {
+			quotation = converter.currencyQuotation("ZAR","EGP", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("139.16"));
+		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveConverterDolarParaEuro(){
+		BigDecimal quotation;
+		try {
+			quotation = converter.currencyQuotation("USD", "EUR", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("93.57"));
+		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveConverterEuroParaDolar(){
+		BigDecimal quotation;
+		try {
+			quotation = converter.currencyQuotation("EUR", "USD", 100, "18/01/2017");
+			assertEquals(quotation, new BigDecimal("106.84"));
 		} catch (ConverterException e) {
 			fail("Teste falho!");
 		}

@@ -56,7 +56,7 @@ public class ValidadorTest {
 			validador.validarParametrosEntrada("BRL", "USD", null, "17/01/2017");
 			fail("Teste falho!");
 		} catch (ConverterException e) {
-			assertEquals("value esta nulo.", e.getMessage());
+			assertEquals("value invalido.", e.getMessage());
 		}
 	}
 	

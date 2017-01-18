@@ -18,10 +18,10 @@ public class FabricaCalculadora {
 		throw new ConverterException("Tipo invalido!!");
 	}
 	
-	public Calculadora fabricar(String from, String to) throws ConverterException{
-		if(!from.equalsIgnoreCase(BRL) && to.equalsIgnoreCase(BRL)){
+	public Calculadora fabricar(String[] from, String[] to) throws ConverterException{
+		if(from != null && to == null){
 			return new CalculadoraRealCompra();
-		}else if(from.equalsIgnoreCase(BRL) && !to.equalsIgnoreCase(BRL)){
+		}else if(from == null && to != null){
 			return new CalculadoraRealVenda();
 		}
 		throw new ConverterException("Tipo invalido!!");
