@@ -1,0 +1,18 @@
+package conversor.core.calculadora;
+
+import java.math.BigDecimal;
+
+public abstract class CalculadoraOutra extends Calculadora {
+
+	@Override
+	public BigDecimal calcular(String value, String[] infoFrom, String[] infoTo) {
+		return calcular(infoTo[6], resultadoFromEmDolar(value, infoFrom[7]));
+	}
+
+	private BigDecimal calcular(String taxaTo, BigDecimal resultadoFromEmDolar) {
+		return resultadoFromEmDolar.multiply((new BigDecimal(ajustarFormato(taxaTo))));
+	}
+	
+	protected abstract BigDecimal resultadoFromEmDolar(String value, String taxa);
+
+}
