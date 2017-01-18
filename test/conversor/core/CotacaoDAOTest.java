@@ -10,13 +10,13 @@ import org.junit.Test;
 import conversor.exception.ConverterException;
 import conversor.exception.ParametroInvalidoException;
 
-public class BufferedCSVTest {
+public class CotacaoDAOTest {
 	
-	private BufferedCSV leitor;
+	private CotacaoDAO leitor;
 
 	@Before
 	public void setUp() throws Exception {
-		leitor = new BufferedCSV();
+		leitor = new CotacaoDAO();
 	}
 	
 	@Test
@@ -62,7 +62,7 @@ public class BufferedCSVTest {
 	@Test
 	public void deveRetornarBufferedReaderQuandoPossuirArquivoCsvParaDataPassada(){
 		try {
-			BufferedReader bufferedReader = leitor.getBufferedReader("17/01/2017");
+			BufferedReader bufferedReader = leitor.buscarDadosCotacao("17/01/2017");
 			assertNotNull(bufferedReader);
 		} catch (ConverterException e) {
 			fail("Teste falho: " + e.getMessage());
@@ -72,7 +72,7 @@ public class BufferedCSVTest {
 	@Test
 	public void deveSubirConverterExceptionQuandoNãoEncontrarArquivoParaDataSolicitada(){
 		try {
-			BufferedReader bufferedReader = leitor.getBufferedReader("15/01/2017");
+			BufferedReader bufferedReader = leitor.buscarDadosCotacao("15/01/2017");
 			fail("Teste falho");
 		} catch (ConverterException ex) {
 			assertTrue(ex.getMessage().contains("Não possui cotação para o dia solicitado!"));

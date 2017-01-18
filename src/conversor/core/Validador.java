@@ -10,8 +10,8 @@ public class Validador {
 			excecaoParametroInvalido("from esta nulo.");
 		if(to == null)
 			excecaoParametroInvalido("to esta nulo.");
-		if(value == null)
-			excecaoParametroInvalido("value esta nulo.");
+		if(value == null || value.equals(0))
+			excecaoParametroInvalido("value invalido.");
 		if(quotation == null)
 			excecaoParametroInvalido("quotation esta nulo.");
 		if(from.equalsIgnoreCase(to))

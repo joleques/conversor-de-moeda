@@ -9,9 +9,7 @@ public abstract class CalculadoraOutra extends Calculadora {
 		return calcular(infoTo[6], resultadoFromEmDolar(value, infoFrom[7]));
 	}
 
-	private BigDecimal calcular(String taxaTo, BigDecimal resultadoFromEmDolar) {
-		return resultadoFromEmDolar.multiply((new BigDecimal(ajustarFormato(taxaTo))));
-	}
+	protected abstract BigDecimal calcular(String taxaTo, BigDecimal resultadoFromEmDolar);
 	
 	protected abstract BigDecimal resultadoFromEmDolar(String value, String taxa);
 

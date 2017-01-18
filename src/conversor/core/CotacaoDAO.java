@@ -9,7 +9,7 @@ import java.net.URL;
 import conversor.exception.ConverterException;
 import conversor.exception.ParametroInvalidoException;
 
-public class BufferedCSV {
+public class CotacaoDAO {
 
 	
 	private static final String CARACTER_PARA_SPLIT_DATA = "/";
@@ -17,7 +17,7 @@ public class BufferedCSV {
 	protected static final String URL = "http://www4.bcb.gov.br/Download/fechamento/";
 
 	
-	public BufferedReader getBufferedReader(String quotation) throws ConverterException{
+	public BufferedReader buscarDadosCotacao(String quotation) throws ConverterException{
 		try {
 			URL url = new URL(construirUrl(quotation));
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();

@@ -10,4 +10,9 @@ public class CalculadoraTipoA extends CalculadoraOutra {
 		return new BigDecimal(value.toString()).divide(new BigDecimal(ajustarFormato(taxa)), 2, RoundingMode.HALF_UP);
 	}
 
+	@Override
+	protected BigDecimal calcular(String taxaTo, BigDecimal resultadoFromEmDolar) {
+		return resultadoFromEmDolar.multiply((new BigDecimal(ajustarFormato(taxaTo))));
+	}
+
 }

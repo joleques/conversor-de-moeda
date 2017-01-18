@@ -3,19 +3,20 @@ package conversor.core;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import conversor.exception.ConverterException;
 
-public class ConverterTest {
+public class ConversorTest {
 	
-	private Converter converter;
+	private Conversor converter;
 
 	@Before
 	public void setUp() throws Exception {
-		converter = new Converter();
+		converter = new Conversor();
 	}
 	
 	@Test
@@ -47,6 +48,36 @@ public class ConverterTest {
 			quotation = converter.currencyQuotation("ZAR", "EGP", 100, "17/01/2017");
 			assertEquals(quotation, new BigDecimal("142.86"));
 		} catch (ConverterException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveDecrementarDoisDiasQuandoDataPassadaForDomingo(){
+		try {
+			String data = converter.tratarDiasUteis("15/01/2017");
+			assertEquals(data, "13/01/2017");
+		} catch (ParseException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void deveDecrementarUmDiaQuandoDataPassadaForSabado(){
+		try {
+			String data = converter.tratarDiasUteis("14/01/2017");
+			assertEquals(data, "13/01/2017");
+		} catch (ParseException e) {
+			fail("Teste falho!");
+		}
+	}
+	
+	@Test
+	public void naoDeveDecrementarDiaQuandoDataPassadaForDiaSemana(){
+		try {
+			String data = converter.tratarDiasUteis("12/01/2017");
+			assertEquals(data, "12/01/2017");
+		} catch (ParseException e) {
 			fail("Teste falho!");
 		}
 	}
