@@ -33,11 +33,3 @@ public abstract class CalculadoraOutra extends Calculadora {
 	protected abstract BigDecimal resultadoEmDolar(String value, String taxa);
 
 }
-
-
-/*
-if((ehDolar(infoTo) && infoFrom[2].equals("A")) || (ehDolar(infoFrom) && infoTo[2].equals("A")))
-				return converter(value, infoFrom, infoTo );
-			else
-				return converter(value, infoTo ,infoFrom );			
-*/
