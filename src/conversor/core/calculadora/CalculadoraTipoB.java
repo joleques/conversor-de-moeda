@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 public class CalculadoraTipoB extends CalculadoraOutra {
 
 	@Override
-	protected BigDecimal resultadoFromEmDolar(String value, String taxa) {
+	protected BigDecimal resultadoEmDolar(String value, String taxa) {
 		return new BigDecimal(value.toString()).multiply(new BigDecimal(ajustarFormato(taxa)));
 	}
 	

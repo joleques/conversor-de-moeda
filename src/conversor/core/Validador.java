@@ -1,5 +1,7 @@
 package conversor.core;
 
+import java.math.BigDecimal;
+
 import conversor.exception.ParametroInvalidoException;
 
 public class Validador {
@@ -10,12 +12,10 @@ public class Validador {
 			excecaoParametroInvalido("from esta nulo.");
 		if(to == null)
 			excecaoParametroInvalido("to esta nulo.");
-		if(value == null || value.equals(0))
+		if(value == null || (new BigDecimal(value.toString()).compareTo(new BigDecimal("0")) == -1))
 			excecaoParametroInvalido("value invalido.");
 		if(quotation == null)
 			excecaoParametroInvalido("quotation esta nulo.");
-		if(from.equalsIgnoreCase(to))
-			excecaoParametroInvalido("Moedas não podem ser iguais.");
 		
 	}
 

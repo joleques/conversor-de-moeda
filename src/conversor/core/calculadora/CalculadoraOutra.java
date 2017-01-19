@@ -5,12 +5,39 @@ import java.math.BigDecimal;
 public abstract class CalculadoraOutra extends Calculadora {
 
 	@Override
-	public BigDecimal converter(String value, String[] infoFrom, String[] infoTo) {
-		return calcular(infoTo[6], resultadoFromEmDolar(value, infoFrom[7]));
+	public BigDecimal converter(String value, String[] cotacaoFrom, String[] cotacaoTo) {
+		if(ehParaExecutarCalculoTipoA(cotacaoFrom, cotacaoTo) || fromOuToNaoehDolar(cotacaoFrom, cotacaoTo))
+			return calcular(cotacaoTo[6], resultadoEmDolar(value, cotacaoFrom[7]));
+		else
+			return calcular(cotacaoFrom[6], resultadoEmDolar(value, cotacaoTo[7]));
 	}
 
+	private boolean ehParaExecutarCalculoTipoA(String[] cotacaoFrom, String[] cotacaoTo) {
+		return (ehDolar(cotacaoTo) && ehTipoA(cotacaoFrom)) || (ehDolar(cotacaoFrom) && ehTipoA(cotacaoTo));
+	}
+
+	private boolean ehTipoA(String[] cotacao) {
+		return cotacao[2].equals("A");
+	}
+
+	private boolean ehDolar(String[] moeda) {
+		return moeda[3].equals("USD");
+	}
+	
+	protected boolean fromOuToNaoehDolar(String[] from, String[] to) {
+		return !(ehDolar(from) || ehDolar(to));
+	}
+	
 	protected abstract BigDecimal calcular(String taxaTo, BigDecimal resultadoFromEmDolar);
 	
-	protected abstract BigDecimal resultadoFromEmDolar(String value, String taxa);
+	protected abstract BigDecimal resultadoEmDolar(String value, String taxa);
 
 }
+
+
+/*
+if((ehDolar(infoTo) && infoFrom[2].equals("A")) || (ehDolar(infoFrom) && infoTo[2].equals("A")))
+				return converter(value, infoFrom, infoTo );
+			else
+				return converter(value, infoTo ,infoFrom );			
+*/

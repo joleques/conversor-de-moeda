@@ -32,6 +32,8 @@ public class Conversor {
 
 	public BigDecimal currencyQuotation(String from, String to, Number value, String quotation)  throws ConverterException{
 		BigDecimal resultado = null;
+		if (ehConversaoParaMesmaMoeda(from,to))
+			return new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
 		try {
 			validador.validarParametrosEntrada(from, to, value, quotation);
 			String nomeArquivo = tratarDiasUteis(quotation);
@@ -45,6 +47,10 @@ public class Conversor {
 		return resultado.setScale(2, RoundingMode.HALF_EVEN);
 	}
 	
+	private boolean ehConversaoParaMesmaMoeda(String from, String to) {
+		return from != null && to != null && from.equalsIgnoreCase(to);
+	}
+
 	private Calculadora getCalculadora(String[] cotacaoFrom, String[] cotacaoTo) throws ConverterException {
 		if(ehConversaoParaReal(cotacaoFrom, cotacaoTo))
 			return fabrica.fabricar(cotacaoFrom, cotacaoTo);
