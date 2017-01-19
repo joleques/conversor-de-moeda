@@ -18,10 +18,6 @@ public abstract class Calculadora {
 	private boolean fromOuToehReal(String[] from, String[] to) {
 		return from == null || to == null;
 	}
-
-	private boolean ehDolar(String[] moeda) {
-		return moeda[3].equals("USD");
-	}
 	
 	protected abstract BigDecimal converter (String value, String[] infoFrom, String[] infoTo );
 }
