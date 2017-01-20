@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public abstract class CalculadoraOutra extends Calculadora {
 
 	@Override
-	public BigDecimal converter(String value, String[] cotacaoFrom, String[] cotacaoTo) {
+	public BigDecimal calcular(String value, String[] cotacaoFrom, String[] cotacaoTo) {
 		if(ehParaExecutarCalculoTipoA(cotacaoFrom, cotacaoTo) || fromOuToNaoehDolar(cotacaoFrom, cotacaoTo))
 			return calcular(cotacaoTo[6], resultadoEmDolar(value, cotacaoFrom[7]));
 		else
