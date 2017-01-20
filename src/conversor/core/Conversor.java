@@ -10,12 +10,13 @@ import java.util.Calendar;
 
 import conversor.core.calculadora.Calculadora;
 import conversor.core.calculadora.FabricaCalculadora;
+import conversor.core.validadores.ValidadorParametrosEntrada;
 import conversor.exception.ConverterException;
 import conversor.exception.ParametroInvalidoException;
 
 public class Conversor {
 
-	private Validador validador;
+	private ValidadorParametrosEntrada validador;
 	private FabricaCalculadora fabrica;
 	private BufferedReader dados;
 	
@@ -26,7 +27,6 @@ public class Conversor {
 	
 	public Conversor() {
 		super();
-		validador = new Validador();
 		fabrica = new FabricaCalculadora();
 	}
 
@@ -35,7 +35,8 @@ public class Conversor {
 		if (ehConversaoParaMesmaMoeda(from,to))
 			return new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
 		try {
-			validador.validarParametrosEntrada(from, to, value, quotation);
+			validador = new ValidadorParametrosEntrada(from, to, value, quotation);
+			validador.validar();
 			String nomeArquivo = tratarDiasUteis(quotation);
 			String[] cotacaoFrom = buscarCotacao(from, nomeArquivo);
 			String[] cotacaoTo = buscarCotacao(to, nomeArquivo);
